@@ -1,5 +1,5 @@
 const PubSub = require('../helpers/pub_sub.js');
-const MountainView = require('./views/mountain_view.js');
+const MountainView = require('./mountain_view.js');
 
 const MountainsListView = function (container) {
   this.container = container;

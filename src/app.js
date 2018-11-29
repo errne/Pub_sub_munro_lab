@@ -1,5 +1,6 @@
 const Mountains = require('./models/mountains.js');
 const ErrorView = require('./views/error_view.js');
+const MountainsListView = require('./views/mountains_list_view.js');
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('JavaScript Loaded');
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const errorView = new ErrorView(mountainsContainer);
   errorView.bindEvents();
 
-
+  const mountainsListView = new MountainsListView(mountainsContainer);
+  mountainsListView.bindEvents();
 
 })
