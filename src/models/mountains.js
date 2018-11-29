@@ -3,6 +3,7 @@ const Request = require('../helpers/request.js');
 
 const Mountains = function () {
   this.data = null;
+  this.regions = null;
 }
 
 Mountains.prototype.getData = function () {
@@ -11,12 +12,29 @@ Mountains.prototype.getData = function () {
   request.get()
   .then((banana) => {
     this.data = banana;
-    console.log(this.data);
     PubSub.publish('Mountains:data-ready', this.data);
   })
   .catch((error) => {
     PubSub.publish('Mountains:error', error);
   });
 };
+
+Mountains.prototype.bindEvents = function () {
+  PubSub.subscribe('SelectView:change', (event) => {
+    const region = event.detail;
+    this.getRegion(region);
+  });
+};
+
+Mountains.prototype.getRegion = function (name) {
+  const requestHelper = new RequestHelper(`https://munroapi.herokuapp.com/api/munros/region/${name}`);
+  requestHelper.get((data) => {
+    this.regions = data;
+    PubSub.publish('Mountains:region-data', this.regions);
+    console.log(this.regions);
+  });
+};
+
+
 
 module.exports = Mountains;
